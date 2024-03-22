@@ -11,6 +11,7 @@ import {
   import { useAuthState } from "react-firebase-hooks/auth";
   import { db, auth } from "../../config/firebase";
   import { Post as IPost } from "./main";
+  import './post.css';
   
   interface Props {
     post: IPost;
@@ -84,21 +85,23 @@ import {
     }, []);
   
     return (
-      <div>
-        <div className="title">
-          <h1> {post.title}</h1>
+        <div className="post">
+          <div className="title">
+            <h1>{post.title}</h1>
+          </div>
+          <div className="body">
+            <p>{post.description}</p>
+          </div>
+          <div className="footer">
+            <p>@{post.username}</p>
+            <div className="like-button-container">
+              <button className="like-button" onClick={hasUserLiked ? removeLike : addLike}>
+                {hasUserLiked ? <>&#128078;</> : <>&#128077;</>}{" "}
+              </button>
+              </div>
+            {likes && <p className="likes-count">Likes: {likes?.length}</p>}
+          </div>
         </div>
-        <div className="body">
-          <p> {post.description} </p>
-        </div>
-  
-        <div className="footer">
-          <p> @{post.username} </p>
-          <button onClick={hasUserLiked ? removeLike : addLike}>
-            {hasUserLiked ? <>&#128078;</> : <>&#128077;</>}{" "}
-          </button>
-          {likes && <p> Likes: {likes?.length} </p>}
-        </div>
-      </div>
-    );
+      );
+      
   };
